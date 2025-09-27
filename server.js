@@ -15,7 +15,7 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 
 // Controllers
 const authController = require('./controllers/auth.js');
-
+const adminRacesController = require('./controllers/admin/races.js');
 // Set the port from environment variable or default to 3000
 const PORT = process.env.PORT ? process.env.PORT : '3000';
 
@@ -47,7 +47,7 @@ app.use(
 
 // Add user variable to all templates
 app.use(passUserToView);
-
+app.use('/admin/races', adminRacesController);
 // PUBLIC
 app.get('/', (req, res) => {
   res.render('index.ejs');

@@ -9,15 +9,26 @@
     <h1>Create a new account!</h1>
     <form action="/auth/sign-up" method="POST">
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+      <input type="text" name="username" id="username" required />
 
       <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
+      <input type="password" name="password" id="password" required />
 
       <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
+      <input type="password" name="confirmPassword" id="confirmPassword" required />
+
+      <label for="favDrivers">Favorite Drivers (optional):</label>
+      <input type="text" name="favDrivers" id="favDrivers" placeholder="e.g., Max Verstappen, Charles Leclerc" />
+
+      <label for="role">Account Type:</label>
+      <select name="role" id="role" required>
+        <option value="user">Regular User</option>
+        <option value="admin">Administrator</option>
+      </select>
 
       <button type="submit">Sign up</button>
     </form>
+
+    <p><a href="/auth/sign-in">Already have an account? Sign In</a></p>
   </body>
 </html>

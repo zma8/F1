@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Manage Races</title>
+</head>
+<body>
+    <h1>Manage F1 Races</h1>
+    
+    <a href="/admin/races/new">Add New Race</a>
+    <a href="/auth/sign-out">Sign Out</a>
+
+    <h2>All Races</h2>
+    
+    <% races.forEach(race => { %>
+        <div>
+            <h3><%= race.name %></h3>
+            <p>Date: <%= race.date.toDateString() %></p>
+            <p>Circuit: <%= race.circuit %></p>
+            <p>Country: <%= race.country %></p>
+            <p>Status: <%= race.status %></p>
+            
+            <a href="/admin/races/<%= race._id %>">View</a>
+            <a href="/admin/races/<%= race._id %>/edit">Edit</a>
+            <form method="POST" action="/admin/races/<%= race._id %>?_method=DELETE" style="display: inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+        <hr>
+    <% }); %>
+
+</body>
+</html>

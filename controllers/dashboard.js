@@ -34,11 +34,39 @@ router.get('/',async (req,res)=>{
                 countdown=`${days} days, ${hours} hrs`;
             }
         }
+        const recentPredictions=await Predictions.find({
+            userId:req.session.user._id
+        }).populate('raceId').sort({createdAt:-1}).limit(5);
+         
+        let completedCount=0;
+        let totalPoints=0;
 
-        
+        for(let prediction of recentPredictions){
+            if(prediction.raceId&&prediction.raceId.status==='completed'){
+                completedCount++;
+                totalPoints+=prediction.points ||0;
+            }
+        }
 
+        const averageAccuracy=completedCount>0?
+        Math.round((totalPoints/(completedCount*50))*100):0;
+
+        res.render('dashboard/index.ejs',{
+            user:user,
+            nextRace:nextRace,
+            userPrediction:userPrediction,
+            countdown:countdown,
+            recentPredictions:recentPredictions,
+            status:{
+                totalPoints:totalPoints,
+                averageAccuracy:averageAccuracy,
+                totalPredictions:completedCount
+            }
+        });
     }catch (err){
       console.log(error);
       res.redirect('/'); 
     }
-})
+});
+
+module.exports=router;

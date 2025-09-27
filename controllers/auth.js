@@ -31,11 +31,17 @@ router.post('/sign-up', async (req, res) => {
 
   req.session.user = {
     username: newUser.username,
-    _id: newUser._id
+    _id: newUser._id,
+    role: newUser.role  // Add role to session
   };
 
   req.session.save(() => {
-    res.redirect("/");
+    // Redirect based on role
+    if (newUser.role === 'admin') {
+      res.redirect('/admin/races');
+    } else {
+      res.redirect('/dashboard');
+    }
   });
 });
 
@@ -55,10 +61,16 @@ router.post('/sign-in', async (req, res) => {
   req.session.user = {
     username: userInDatabase.username,
     _id: userInDatabase._id,
+    role: userInDatabase.role  // Add role to session
   };
 
   req.session.save(() => {
-    res.redirect('/');
+    // Redirect based on role
+    if (userInDatabase.role === 'admin') {
+      res.redirect('/admin/races');
+    } else {
+      res.redirect('/dashboard');
+    }
   });
 });
 
@@ -67,7 +79,5 @@ router.get("/sign-out", (req, res) => {
     res.redirect("/");
   });
 });
-
-
 
 module.exports = router;

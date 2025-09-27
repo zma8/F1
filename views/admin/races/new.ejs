@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Race</title>
+</head>
+<body>
+    <h1>Add New F1 Race</h1>
+    
+    <a href="/admin/races">Back to Races</a>
+    <a href="/auth/sign-out">Sign Out</a>
+
+    <form method="POST" action="/admin/races">
+        <label for="name">Race Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+
+        <label for="date">Race Date:</label>
+        <input type="datetime-local" id="date" name="date" required>
+        <br><br>
+
+        <label for="circuit">Circuit:</label>
+        <input type="text" id="circuit" name="circuit" required>
+        <br><br>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required>
+        <br><br>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="upcoming">Upcoming</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+        </select>
+        <br><br>
+
+        <h3>Race Results (Optional)</h3>
+        
+        <label for="pole">Pole Position:</label>
+        <input type="text" id="pole" name="pole">
+        <br><br>
+
+        <label for="winner">Race Winner:</label>
+        <input type="text" id="winner" name="winner">
+        <br><br>
+
+        <label for="podium">Podium (comma separated):</label>
+        <input type="text" id="podium" name="podium">
+        <br><br>
+
+        <label for="firstDNF">First DNF (lap number):</label>
+        <input type="number" id="firstDNF" name="firstDNF" min="1" max="20">
+        <br><br>
+
+        <label for="fastestLap">Fastest Lap:</label>
+        <input type="text" id="fastestLap" name="fastestLap">
+        <br><br>
+
+        <button type="submit">Add Race</button>
+        <a href="/admin/races">Cancel</a>
+    </form>
+
+</body>
+</html>
