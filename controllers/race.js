@@ -27,7 +27,7 @@ router.get('/:id',async(req,res)=>{
                 raceId:req.params.id
             });
         }
-        res.render ('race/show.ejs',{
+        res.render ('races/show.ejs',{
             race:race,
             userPrediction:userPrediction
         });
@@ -42,7 +42,7 @@ router.get('/:raceId/predictions',async(req,res)=>{
         const race=await Race.findById(req.params.raceId);
         const predictions= await Predictions.find({raceId:req.params.raceId}).populate('userId');
 
-        res.render('race/predictions.ejs',{
+        res.render('races/predictions.ejs',{
             race:race,
             predictions:predictions
         });
@@ -88,3 +88,4 @@ router.post('/:raceId/predictions',async(req,res)=>{
     res.redirect('/');
     }
 });
+module.exports=router;

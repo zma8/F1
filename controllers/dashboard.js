@@ -10,8 +10,7 @@ router.get('/',async (req,res)=>{
         const user=await User.findById(req.session.user._id);
 
         const nextRace=await Race.findOne({
-            status:'upcoming',
-            date:{$gte:new Date()}
+            status:'upcoming'
         }).sort ({date:1});
 
         let userPrediction=null;
@@ -57,7 +56,7 @@ router.get('/',async (req,res)=>{
             userPrediction:userPrediction,
             countdown:countdown,
             recentPredictions:recentPredictions,
-            status:{
+            stats:{
                 totalPoints:totalPoints,
                 averageAccuracy:averageAccuracy,
                 totalPredictions:completedCount
