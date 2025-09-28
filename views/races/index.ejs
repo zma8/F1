@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Race Calendar</title>
+</head>
+<body>
+      <%- include('../partials/navbar') %>
+    <h1>F1 Race Calendar</h1>
+
+    <h2>2024 Season</h2>
+    
+    <% races.forEach(race => { %>
+        <div>
+            <h3><%= race.name %></h3>
+            <p>Date: <%= race.date.toDateString() %></p>
+            <p>Circuit: <%= race.circuit %></p>
+            <p>Country: <%= race.country %></p>
+            <p>Status: <%= race.status %></p>
+            
+            <a href="/races/<%= race._id %>">View Details</a>
+            
+            <% if (race.status === 'upcoming') { %>
+                <a href="/races/<%= race._id %>/predictions/new">Make Prediction</a>
+            <% } %>
+        </div>
+        <hr>
+    <% }); %>
+
+</body>
+</html>
