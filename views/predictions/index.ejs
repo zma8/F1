@@ -1,1 +1,41 @@
-//show all user prediction on all races
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Predictions</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <h1>My Predictions</h1>
+
+    <% if (predictions.length === 0) { %>
+        <p>You haven't made any predictions yet.</p>
+        <a href="/races">View races to make your first prediction!</a>
+    <% } else { %>
+        <% predictions.forEach(prediction => { %>
+            <div>
+                <% if (prediction.raceId) { %>
+                    <p>Date: <%= prediction.raceId.date.toDateString() %></p>
+                    <p>Status: <%= prediction.raceId.status %></p>
+                <% } %>
+                <p>Confidence: <%= prediction.confidence %>%</p>
+                
+                <% if (prediction.raceId && prediction.raceId.status === 'completed') { %>
+                    <p><strong>Points Earned: <%= prediction.points || 0 %></strong></p>
+                <% } %>
+                
+                <a href="/predictions/<%= prediction._id %>">View Details</a>
+                
+                <% if (prediction.raceId && prediction.raceId.status === 'upcoming') { %>
+                    <a href="/predictions/<%= prediction._id %>/edit">Edit</a>
+                    <form method="POST" action="/predictions/<%= prediction._id %>?_method=DELETE">
+                        <button type="submit" >Delete</button>
+                    </form>
+                <% } %>
+            </div>
+            <hr>
+        <% }); %>
+    <% } %>
+
+</body>
+</html>
