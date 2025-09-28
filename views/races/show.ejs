@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= race.name %> - Race Details</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1><%= race.name %></h1>
+      
+
+    <h2>Race Information</h2>
+    <p>Date: <%= race.date.toDateString() %></p>
+    <p>Circuit: <%= race.circuit %></p>
+    <p>Country: <%= race.country %></p>
+    <p>Status: <%= race.status %></p>
+
+    <% if (race.status === 'completed') { %>
+        <h3>Race Results</h3>
+        <% if (race.pole) { %><p>Pole Position: <%= race.pole %></p><% } %>
+        <% if (race.winner) { %><p>Winner: <%= race.winner %></p><% } %>
+        <% if (race.podium && race.podium.length > 0) { %>
+            <p>Podium: <%= race.podium.join(', ') %></p>
+        <% } %>
+        <% if (race.fastestLap) { %><p>Fastest Lap: <%= race.fastestLap %></p><% } %>
+        <% if (race.firstDNF) { %><p>First DNF: Lap <%= race.firstDNF %></p><% } %>
+    <% } %>
+
+    <h3>Your Prediction</h3>
+    <% if (userPrediction) { %>
+        <p>Pole: <%= userPrediction.pole %></p>
+        <p>Winner: <%= userPrediction.winner %></p>
+        <p>Podium: <%= userPrediction.podium.join(', ') %></p>
+        <p>Fastest Lap: <%= userPrediction.fastestLap %></p>
+        <p>First DNF: <%= userPrediction.firstDNF %></p>
+        <p>Confidence: <%= userPrediction.confidence %>%</p>
+        
+        <% if (race.status === 'upcoming') { %>
+            <a href="/predictions/<%= userPrediction._id %>/edit">Edit Prediction</a>
+        <% } %>
+        
+        <% if (race.status === 'completed') { %>
+            <p><strong>Points Earned: <%= userPrediction.points || 0 %></strong></p>
+        <% } %>
+    <% } else { %>
+        <% if (race.status === 'upcoming') { %>
+            <p>You haven't made a prediction yet!</p>
+            <a href="/races/<%= race._id %>/predictions/new">Make Prediction</a>
+        <% } else { %>
+            <p>You didn't make a prediction for this race.</p>
+        <% } %>
+    <% } %>
+
+    <h3>All Predictions</h3>
+    <a href="/races/<%= race._id %>/predictions">View All User Predictions</a>
+
+</body>
+</html>
