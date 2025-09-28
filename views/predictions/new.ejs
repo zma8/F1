@@ -1,1 +1,46 @@
-//create new prediciton
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Make Prediction - <%= race.name %></title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <h1>Make Prediction</h1>
+    <h2><%= race.name %></h2>
+
+    <p>Date: <%= race.date.toDateString() %></p>
+    <p>Circuit: <%= race.circuit %></p>
+    <p>Country: <%= race.country %></p>
+
+    <form method="POST" action="/races/<%= race._id %>/predictions">
+        <label for="pole">Pole Position:</label>
+        <input type="text" id="pole" name="pole" required>
+        <br><br>
+
+        <label for="winner">Race Winner:</label>
+        <input type="text" id="winner" name="winner" required>
+        <br><br>
+
+        <label for="podium">Podium (comma separated):</label>
+        <input type="text" id="podium" name="podium" placeholder="e.g., Verstappen, Leclerc, Russell" required>
+        <br><br>
+
+        <label for="fastestLap">Fastest Lap:</label>
+        <input type="text" id="fastestLap" name="fastestLap" required>
+        <br><br>
+
+        <label for="firstDNF">First DNF:</label>
+        <input type="text" id="firstDNF" name="firstDNF" required>
+        <br><br>
+
+        <label for="confidence">Confidence Level (1-100):</label>
+        <input type="number" id="confidence" name="confidence" min="1" max="100" value="50" required>
+        <br><br>
+
+        <button type="submit">Save Prediction</button>
+        <a href="/races/<%= race._id %>">Cancel</a>
+    </form>
+
+</body>
+</html>
