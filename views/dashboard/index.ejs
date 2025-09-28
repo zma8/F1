@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Race Weekend Planner</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1>Welcome back, <%= user.username %>!</h1>
+   
+    <h2>Next Race</h2>
+    <% if (nextRace) { %>
+        <div>
+            <h3><%= nextRace.name %></h3>
+            <p>Date: <%= nextRace.date.toDateString() %></p>
+            <p>Circuit: <%= nextRace.circuit %></p>
+            <p>Country: <%= nextRace.country %></p>
+            
+            <% if (countdown) { %>
+                <p>Time remaining: <%= countdown %></p>
+            <% } %>
+            
+            <% if (userPrediction) { %>
+                <p>✅ You have made your prediction!</p>
+                <a href="/predictions/<%= userPrediction._id %>/edit">Edit Prediction</a>
+            <% } else { %>
+                <p>❌ No prediction made yet</p>
+                <a href="/races/<%= nextRace._id %>/predictions/new">Make Prediction</a>
+            <% } %>
+            
+            <a href="/races/<%= nextRace._id %>">View Race Details</a>
+        </div>
+    <% } else { %>
+        <p>No upcoming races</p>
+    <% } %>
+
+   
+
+    <h2>Recent Activity</h2>
+    <% if (recentPredictions.length > 0) { %>
+        <% recentPredictions.slice(0, 3).forEach(prediction => { %>
+            <div>
+                <h4><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h4>
+                <% if (prediction.raceId && prediction.raceId.status === 'completed') { %>
+                    <p>Points: <%= prediction.points || 0 %></p>
+                <% } else { %>
+                    <p>Prediction submitted</p>
+                <% } %>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No predictions made yet. <a href="/races">View races to get started!</a></p>
+    <% } %>
+
+</body>
+</html
