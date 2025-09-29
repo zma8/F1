@@ -67,15 +67,33 @@ router.get('/', async(req,res)=>{
             }
         });
 
-        
+        for(let category in categoryStats){
+            const stat=categoryStats[category];
 
+            if(stat.total>0){
+                stat.prediction=Math.round((stat.correct/stat.total)*100);
+            } else {
+                stat.prediction=0;
+            }
+        }
 
-
-
-
+        res.render('stats/index.ejs',{
+            userPredictions: userPredictions,
+            completedPredictions: completedPredictions,
+            categoryStats: categoryStats,
+            bestRace: bestRace,
+            stats: {
+              totalPredictions: userPredictions.length,
+              completedPredictions: completedPredictions.length,
+              upcomingPredictions: userPredictions.length - completedPredictions.length,
+              totalPoints: totalPoints,
+              averagePoints: Math.round(averagePoints * 100) / 100,
+              accuracy: accuracy
+            }
+        });
 
     }catch(error){
     console.log(error);
     res.redirect('/dashboard');
     }
-})
+});
