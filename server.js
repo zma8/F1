@@ -18,6 +18,7 @@ const authController = require('./controllers/auth.js');
 const adminRacesController = require('./controllers/admin/races.js');
 const dashboardController = require('./controllers/dashboard.js');
 const raceController = require('./controllers/race.js');
+const predictionsController = require('./controllers/predictions.js');
 
 // Set the port from environment variable or default to 3000
 const PORT = process.env.PORT ? process.env.PORT : '3000';
@@ -59,7 +60,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authController);
 app.use('/dashboard', dashboardController);
 app.use('/races', raceController);
-
+app.use('/predictions', predictionsController);
 // PROTECTED
 
 app.get('/vip-lounge', isSignedIn, (req, res) => {
