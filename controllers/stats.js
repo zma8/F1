@@ -27,6 +27,18 @@ router.get('/', async(req,res)=>{
           }
         }
 
+        let categoryStats={
+            pole:{correct:0,total:0},
+            winner:{correct:0,total:0},
+            podium:{correct:0,total:0},
+            fastestLap:{correct:0,total:0},
+            firstDNF:{correct:0,total:0},
+        };
+
+        
+
+
+
 
     }catch(error){
     console.log(error);
