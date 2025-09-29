@@ -35,7 +35,41 @@ router.get('/', async(req,res)=>{
             firstDNF:{correct:0,total:0},
         };
 
+        completedPrediciotns.forEach(prediction=>{
+            if(prediction.raceId&&prediction.raceId.status=='completed'){
+                categoryStats.pole.total++;
+                if(prediction.pole===prediction.raceId.pole){
+                    categoryStats.pole.correct++;
+                }
+
+                categoryStats.winner.total++;
+                if(prediction.winner===prediction.raceId.winner){
+                    categoryStats.winner.correct++;
+                }
+
+                categoryStats.fastestLap.total++;
+                if(prediction.fastestLap===prediction.raceId.fastestLap){
+                    categoryStats.fastestLap.correct++;
+                }
+                 categoryStats.firstDNF.total++;
+                if (prediction.firstDNF === prediction.raceId.firstDNF) {
+                   categoryStats.firstDNF.correct++;
+                }
+
+                if(prediction.podium&&prediction.raceId.podium){
+                    categoryStats.podium.total+=3;
+                    prediction.podium.forEach(driver=>{
+                        if(prediction.raceId.podium.includes(driver)){
+                            categoryStats.podium.correct++;
+                        }
+                    });
+                }
+            }
+        });
+
         
+
+
 
 
 
