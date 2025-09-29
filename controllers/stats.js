@@ -16,7 +16,18 @@ router.get('/', async(req,res)=>{
         const averagePoints=completedPrediciotns.length>0?totalPoints/completedPrediciotns.length:0;
         const accuracy=completedPrediciotns.lastIndexOf>0?Math.round((totalPoints/(completedPrediciotns.length*50))*100):0;
 
-       
+        let bestRace = null;
+        let highestPoints = 0;
+
+        for (let prediction of completedPredictions) {
+          const points = prediction.points || 0;
+          if (points > highestPoints) {
+             highestPoints = points;
+             bestRace = prediction;
+          }
+        }
+
+
     }catch(error){
     console.log(error);
     res.redirect('/dashboard');
