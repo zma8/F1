@@ -99,4 +99,31 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/breakdown', async(req, res) => {
+    try {
+        const userPredictions = await Predictions.find({
+            userId: req.session.user._id
+        }).populate('raceId').sort({ 'raceId.date': 1 });
+
+        const predictionsByYear = {};
+        userPredictions.forEach(prediction => {
+            if (prediction.raceId) {
+                const year = new Date(prediction.raceId.date).getFullYear(); // Fixed: lowercase 'date'
+                if (!predictionsByYear[year]) {
+                    predictionsByYear[year] = [];
+                }
+                predictionsByYear[year].push(prediction);
+            }
+        });
+
+        res.render('stats/breakdown.ejs', {
+            predictionsByYear: predictionsByYear,
+            userPredictions: userPredictions
+        });
+    } catch (error) {
+        console.log(error);
+        res.redirect('/stats');
+    }
+});
+
 module.exports = router;
