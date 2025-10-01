@@ -2,56 +2,130 @@
 <html>
 <head>
     <title><%= race.name %> - Race Details</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <h1><%= race.name %></h1>
-      
 
-    <h2>Race Information</h2>
-    <p>Date: <%= race.date.toDateString() %></p>
-    <p>Circuit: <%= race.circuit %></p>
-    <p>Country: <%= race.country %></p>
-    <p>Status: <%= race.status %></p>
-
-    <% if (race.status === 'completed') { %>
-        <h3>Race Results</h3>
-        <% if (race.pole) { %><p>Pole Position: <%= race.pole %></p><% } %>
-        <% if (race.winner) { %><p>Winner: <%= race.winner %></p><% } %>
-        <% if (race.podium && race.podium.length > 0) { %>
-            <p>Podium: <%= race.podium.join(', ') %></p>
-        <% } %>
-        <% if (race.fastestLap) { %><p>Fastest Lap: <%= race.fastestLap %></p><% } %>
-        <% if (race.firstDNF) { %><p>First DNF: Lap <%= race.firstDNF %></p><% } %>
-    <% } %>
-
-    <h3>Your Prediction</h3>
-    <% if (userPrediction) { %>
-        <p>Pole: <%= userPrediction.pole %></p>
-        <p>Winner: <%= userPrediction.winner %></p>
-        <p>Podium: <%= userPrediction.podium.join(', ') %></p>
-        <p>Fastest Lap: <%= userPrediction.fastestLap %></p>
-        <p>First DNF: <%= userPrediction.firstDNF %></p>
-        <p>Confidence: <%= userPrediction.confidence %>%</p>
+    <div class="container">
+        <h1 class="page-title">🏁 <%= race.name %></h1>
         
-        <% if (race.status === 'upcoming') { %>
-            <a href="/predictions/<%= userPrediction._id %>/edit">Edit Prediction</a>
-        <% } %>
-        
-        <% if (race.status === 'completed') { %>
-            <p><strong>Points Earned: <%= userPrediction.points || 0 %></strong></p>
-        <% } %>
-    <% } else { %>
-        <% if (race.status === 'upcoming') { %>
-            <p>You haven't made a prediction yet!</p>
-            <a href="/races/<%= race._id %>/predictions/new">Make Prediction</a>
-        <% } else { %>
-            <p>You didn't make a prediction for this race.</p>
-        <% } %>
-    <% } %>
+        <div class="details-card">
+            <div class="race-info-header">
+                <h2 class="section-subtitle">Race Information</h2>
+                <% if (race.status === 'upcoming') { %>
+                    <span class="badge-upcoming">UPCOMING</span>
+                <% } else if (race.status === 'completed') { %>
+                    <span class="badge-completed">COMPLETED</span>
+                <% } else { %>
+                    <span class="badge-live">LIVE</span>
+                <% } %>
+            </div>
 
-    <h3>All Predictions</h3>
-    <a href="/races/<%= race._id %>/predictions">View All User Predictions</a>
+            <div class="race-info-details">
+                <p class="race-detail">📅 <%= race.date.toDateString() %></p>
+                <p class="race-detail">🏎️ <%= race.circuit %></p>
+                <p class="race-detail">📍 <%= race.country %></p>
+            </div>
+
+            <% if (race.status === 'completed') { %>
+                <div class="details-section">
+                    <h3 class="section-subtitle">Race Results</h3>
+                    <div class="details-grid">
+                        <% if (race.pole) { %>
+                            <div class="detail-item">
+                                <span class="detail-label">Pole Position:</span>
+                                <span class="detail-value"><%= race.pole %></span>
+                            </div>
+                        <% } %>
+                        <% if (race.winner) { %>
+                            <div class="detail-item">
+                                <span class="detail-label">Winner:</span>
+                                <span class="detail-value"><%= race.winner %></span>
+                            </div>
+                        <% } %>
+                        <% if (race.podium && race.podium.length > 0) { %>
+                            <div class="detail-item">
+                                <span class="detail-label">Podium:</span>
+                                <span class="detail-value"><%= race.podium.join(', ') %></span>
+                            </div>
+                        <% } %>
+                        <% if (race.fastestLap) { %>
+                            <div class="detail-item">
+                                <span class="detail-label">Fastest Lap:</span>
+                                <span class="detail-value"><%= race.fastestLap %></span>
+                            </div>
+                        <% } %>
+                        <% if (race.firstDNF) { %>
+                            <div class="detail-item">
+                                <span class="detail-label">First DNF:</span>
+                                <span class="detail-value">Lap <%= race.firstDNF %></span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+
+            <div class="details-section">
+                <h3 class="section-subtitle">Your Prediction</h3>
+                <% if (userPrediction) { %>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Pole:</span>
+                            <span class="detail-value"><%= userPrediction.pole %></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Winner:</span>
+                            <span class="detail-value"><%= userPrediction.winner %></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Podium:</span>
+                            <span class="detail-value"><%= userPrediction.podium.join(', ') %></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Fastest Lap:</span>
+                            <span class="detail-value"><%= userPrediction.fastestLap %></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">First DNF:</span>
+                            <span class="detail-value"><%= userPrediction.firstDNF %></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Confidence:</span>
+                            <span class="detail-value"><%= userPrediction.confidence %>/10</span>
+                        </div>
+                    </div>
+                    
+                    <% if (race.status === 'completed') { %>
+                        <div class="score-box">
+                            <h3>Your Score</h3>
+                            <p class="score-value"><%= userPrediction.points || 0 %>/50 Points</p>
+                        </div>
+                    <% } %>
+
+                    <div class="form-actions">
+                        <% if (race.status === 'upcoming') { %>
+                            <a href="/predictions/<%= userPrediction._id %>/edit" class="btn-primary">Edit Prediction</a>
+                        <% } %>
+                        <a href="/races/<%= race._id %>/predictions" class="btn-secondary">View All Predictions</a>
+                    </div>
+                <% } else { %>
+                    <% if (race.status === 'upcoming') { %>
+                        <p class="empty-message">You haven't made a prediction yet!</p>
+                        <div class="form-actions">
+                            <a href="/races/<%= race._id %>/predictions/new" class="btn-primary">Make Prediction</a>
+                            <a href="/races/<%= race._id %>/predictions" class="btn-secondary">View All Predictions</a>
+                        </div>
+                    <% } else { %>
+                        <p class="empty-message">You didn't make a prediction for this race.</p>
+                        <div class="form-actions">
+                            <a href="/races/<%= race._id %>/predictions" class="btn-secondary">View All Predictions</a>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

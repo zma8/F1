@@ -36,9 +36,7 @@ const raceSchema = new mongoose.Schema({
     default: [],
   },
   firstDNF: {
-    type: Number,
-    min: 1,
-    max: 20,
+    type: String,
     default: null
   },
   fastestLap: {

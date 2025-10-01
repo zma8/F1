@@ -1,34 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-  </head>
-  <body>
-    <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required />
+    <title>Sign Up - Race Weekend Planner</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-logo">RACE WEEKEND <span>PLANNER</span></h1>
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Join the race prediction community</p>
+            </div>
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required />
+            <form action="/auth/sign-up" method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" required />
+                </div>
 
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" required />
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required />
+                </div>
 
-      <label for="favDrivers">Favorite Drivers (optional):</label>
-      <input type="text" name="favDrivers" id="favDrivers" placeholder="e.g., Max Verstappen, Charles Leclerc" />
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" required />
+                </div>
 
-      <label for="role">Account Type:</label>
-      <select name="role" id="role" required>
-        <option value="user">Regular User</option>
-        <option value="admin">Administrator</option>
-      </select>
+                <div class="form-group">
+                    <label for="favDrivers">Favorite Drivers (optional):</label>
+                    <input type="text" name="favDrivers" id="favDrivers" placeholder="e.g., Max Verstappen, Charles Leclerc" />
+                </div>
 
-      <button type="submit">Sign up</button>
-    </form>
+                <div class="form-group">
+                    <label for="role">Account Type:</label>
+                    <select name="role" id="role" required>
+                        <option value="user">Regular User</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
 
-    <p><a href="/auth/sign-in">Already have an account? Sign In</a></p>
-  </body>
+                <button type="submit" class="btn-primary btn-full">Sign Up</button>
+            </form>
+
+            <p class="auth-footer">
+                Already have an account? <a href="/auth/sign-in" class="auth-link">Sign In</a>
+            </p>
+        </div>
+    </div>
+</body>
 </html>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Race = require('../../models/race.js');
 const User = require('../../models/user.js');
-
+const Predictions = require('../../models/predictions.js');
 
 const requireAdmin = (req, res, next) => {
   if (!req.session.user || req.session.user.role !== 'admin') {
@@ -65,15 +65,6 @@ router.post('/', requireAdmin, async (req, res) => {
 });
 
 
-router.put('/:raceId', requireAdmin, async (req, res) => {
-  try {
-    await Race.findByIdAndUpdate(req.params.raceId, req.body);
-    res.redirect('/admin/races');
-  } catch (error) {
-    console.log(error);
-    res.redirect('/admin/races');
-  }
-});
 
 router.delete('/:raceId', requireAdmin, async (req, res) => {
   try {
@@ -85,4 +76,48 @@ router.delete('/:raceId', requireAdmin, async (req, res) => {
   }
 });
 
+router.put('/:raceId', requireAdmin, async (req, res) => {
+  try {
+    const oldRace = await Race.findById(req.params.raceId);
+    
+
+    if (req.body.podium && typeof req.body.podium === 'string') {
+      req.body.podium = req.body.podium.split(',').map(name => name.trim());
+    }
+
+    await Race.findByIdAndUpdate(req.params.raceId, req.body);
+    
+
+    if (req.body.status === 'completed' && oldRace.status !== 'completed') {
+      const updatedRace = await Race.findById(req.params.raceId);
+      const predictions = await Predictions.find({ raceId: req.params.raceId });
+      
+      for (let prediction of predictions) {
+        let points = 0;
+        
+        if (prediction.pole === updatedRace.pole) points += 10;
+        if (prediction.winner === updatedRace.winner) points += 15;
+        if (prediction.fastestLap === updatedRace.fastestLap) points += 5;
+        if (prediction.firstDNF === updatedRace.firstDNF) points += 5;
+        
+
+        if (updatedRace.podium && updatedRace.podium.length >= 3 && 
+            prediction.podium && prediction.podium.length >= 3) {
+          for (let i = 0; i < 3; i++) {
+            if (prediction.podium[i] === updatedRace.podium[i]) {
+              points += 5;
+            }
+          }
+        }
+        
+        await Predictions.findByIdAndUpdate(prediction._id, { points: points });
+      }
+    }
+    
+    res.redirect('/admin/races');
+  } catch (error) {
+    console.log(error);
+    res.redirect('/admin/races');
+  }
+});
 module.exports = router;

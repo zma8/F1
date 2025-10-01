@@ -2,72 +2,125 @@
 <html>
 <head>
     <title>My Statistics</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>My F1 Statistics</h1>
+    <div class="container">
+        <h1 class="page-title">My F1 Statistics</h1>
 
-    <h2>Overview</h2>
-    <p>Total Predictions: <%= stats.totalPredictions %></p>
-    <p>Completed Predictions: <%= stats.completedPredictions %></p>
-    <p>Upcoming Predictions: <%= stats.upcomingPredictions %></p>
-    <p>Total Points: <%= stats.totalPoints %></p>
-    <p>Average Points: <%= stats.averagePoints %></p>
-    <p>Overall Accuracy: <%= stats.accuracy %>%</p>
-
-    <% if (bestRace) { %>
-        <h3>Best Performance</h3>
-        <p>Race: <%= bestRace.raceId ? bestRace.raceId.name : 'Unknown' %></p>
-        <p>Points: <%= bestRace.points || 0 %></p>
-        <p>Confidence: <%= bestRace.confidence %>%</p>
-    <% } %>
-
-    <h2>Accuracy by Category</h2>
-    
-    <div>
-        <h4>Pole Position</h4>
-        <p><%= categoryStats.pole.correct %> / <%= categoryStats.pole.total %> correct (<%= categoryStats.pole.percentage %>%)</p>
-    </div>
-
-    <div>
-        <h4>Race Winner</h4>
-        <p><%= categoryStats.winner.correct %> / <%= categoryStats.winner.total %> correct (<%= categoryStats.winner.percentage %>%)</p>
-    </div>
-
-    <div>
-        <h4>Podium Positions</h4>
-        <p><%= categoryStats.podium.correct %> / <%= categoryStats.podium.total %> correct (<%= categoryStats.podium.percentage %>%)</p>
-    </div>
-
-    <div>
-        <h4>Fastest Lap</h4>
-        <p><%= categoryStats.fastestLap.correct %> / <%= categoryStats.fastestLap.total %> correct (<%= categoryStats.fastestLap.percentage %>%)</p>
-    </div>
-
-    <div>
-        <h4>First DNF</h4>
-        <p><%= categoryStats.firstDNF.correct %> / <%= categoryStats.firstDNF.total %> correct (<%= categoryStats.firstDNF.percentage %>%)</p>
-    </div>
-
-    <h2>Recent Predictions</h2>
-    <% if (completedPredictions.length > 0) { %>
-        <% completedPredictions.slice(0, 5).forEach(function(prediction) { %>
-            <div>
-                <h4><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h4>
-                <p>Points: <%= prediction.points || 0 %>/50</p>
-                <p>Date: <%= prediction.raceId ? prediction.raceId.date.toDateString() : 'Unknown' %></p>
-                <a href="/predictions/<%= prediction._id %>">View Details</a>
+        <div class="stats-overview">
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.totalPredictions %></span>
+                <span class="stat-label">Total Predictions</span>
             </div>
-            <hr>
-        <% }); %>
-    <% } else { %>
-        <p>No completed predictions yet.</p>
-    <% } %>
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.completedPredictions %></span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.upcomingPredictions %></span>
+                <span class="stat-label">Upcoming</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.totalPoints %></span>
+                <span class="stat-label">Total Points</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.averagePoints %></span>
+                <span class="stat-label">Avg Points</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number"><%= stats.accuracy %>%</span>
+                <span class="stat-label">Accuracy</span>
+            </div>
+        </div>
 
-    <div>
-        <a href="/stats/breakdown">View Detailed Breakdown</a>
-        <a href="/predictions">View All Predictions</a>
+        <% if (bestRace) { %>
+            <div class="best-performance-card">
+                <h2 class="section-subtitle">Best Performance</h2>
+                <div class="best-race-info">
+                    <h3><%= bestRace.raceId ? bestRace.raceId.name : 'Unknown' %></h3>
+                    <p><strong><%= bestRace.points || 0 %></strong> Points</p>
+                    <p>Confidence: <%= bestRace.confidence %>/10</p>
+                </div>
+            </div>
+        <% } %>
+
+        <div class="accuracy-section">
+            <h2 class="section-subtitle">Accuracy by Category</h2>
+            
+            <div class="accuracy-grid">
+                <div class="accuracy-card">
+                    <h4>Pole Position</h4>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" ></div>
+                    </div>
+                    <p><%= categoryStats.pole.correct %> / <%= categoryStats.pole.total %> correct (<%= categoryStats.pole.percentage %>%)</p>
+                </div>
+
+                <div class="accuracy-card">
+                    <h4>Race Winner</h4>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" ></div>
+                    </div>
+                    <p><%= categoryStats.winner.correct %> / <%= categoryStats.winner.total %> correct (<%= categoryStats.winner.percentage %>%)</p>
+                </div>
+
+                <div class="accuracy-card">
+                    <h4>Podium Positions</h4>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" ></div>
+                    </div>
+                    <p><%= categoryStats.podium.correct %> / <%= categoryStats.podium.total %> correct (<%= categoryStats.podium.percentage %>%)</p>
+                </div>
+
+                <div class="accuracy-card">
+                    <h4>Fastest Lap</h4>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" ></div>
+                    </div>
+                    <p><%= categoryStats.fastestLap.correct %> / <%= categoryStats.fastestLap.total %> correct (<%= categoryStats.fastestLap.percentage %>%)</p>
+                </div>
+
+                <div class="accuracy-card">
+                    <h4>First DNF</h4>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" ></div>
+                    </div>
+                    <p><%= categoryStats.firstDNF.correct %> / <%= categoryStats.firstDNF.total %> correct (<%= categoryStats.firstDNF.percentage %>%)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-predictions-section">
+            <h2 class="section-subtitle">Recent Predictions</h2>
+            
+            <% if (completedPredictions.length > 0) { %>
+                <div class="predictions-list">
+                    <% completedPredictions.slice(0, 5).forEach(function(prediction) { %>
+                        <div class="prediction-item">
+                            <div>
+                                <h4><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h4>
+                                <p class="race-detail"><%= prediction.raceId ? prediction.raceId.date.toDateString() : 'Unknown' %></p>
+                            </div>
+                            <div class="prediction-score">
+                                <span class="score-value"><%= prediction.points || 0 %>/50</span>
+                                <a href="/predictions/<%= prediction._id %>" class="btn-secondary btn-small">View</a>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p class="empty-message">No completed predictions yet.</p>
+            <% } %>
+        </div>
+
+        <div class="form-actions">
+            <a href="/stats/breakdown" class="btn-primary">Detailed Breakdown</a>
+            <a href="/predictions" class="btn-secondary">All Predictions</a>
+        </div>
     </div>
 
 </body>

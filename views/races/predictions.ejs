@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= race.name %> - All Predictions</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="container">
+        <h1 class="page-title">🎯 <%= race.name %> - All Predictions</h1>
+        
+        <div class="race-info-details" >
+            <p class="race-detail">📅 <%= race.date.toDateString() %></p>
+            <p class="race-detail">🏎️ <%= race.circuit %></p>
+        </div>
+
+        <% if (predictions.length === 0) { %>
+            <div class="empty-state">
+                <p>No predictions made for this race yet.</p>
+                <a href="/races/<%= race._id %>" class="btn-primary">Back to Race</a>
+            </div>
+        <% } else { %>
+            <div class="predictions-grid">
+                <% predictions.forEach(prediction => { %>
+                    <div class="prediction-card">
+                        <div class="prediction-card-header">
+                            <h3 class="prediction-card-title">👤 <%= prediction.userId.username %></h3>
+                            <% if (race.status === 'completed') { %>
+                                <span class="points-badge"><%= prediction.points || 0 %> pts</span>
+                            <% } %>
+                        </div>
+                        
+                        <div class="prediction-card-body">
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Pole:</span>
+                                    <span class="detail-value"><%= prediction.pole %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Winner:</span>
+                                    <span class="detail-value"><%= prediction.winner %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Podium:</span>
+                                    <span class="detail-value"><%= prediction.podium.join(', ') %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Fastest Lap:</span>
+                                    <span class="detail-value"><%= prediction.fastestLap %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">First DNF:</span>
+                                    <span class="detail-value"><%= prediction.firstDNF %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Confidence:</span>
+                                    <span class="detail-value"><%= prediction.confidence %>/10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <div class="form-actions" >
+                <a href="/races/<%= race._id %>" class="btn-secondary">Back to Race</a>
+                <a href="/races" class="btn-primary">Race Calendar</a>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html>

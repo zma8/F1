@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statistics Breakdown</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="container">
+        <h1 class="page-title">📊 Detailed Statistics Breakdown</h1>
+
+        
+        <h2 class="section-subtitle">Predictions by Season</h2>
+
+        <% if (Object.keys(predictionsByYear).length === 0) { %>
+            <div class="empty-state">
+                <p>No predictions made yet.</p>
+                <a href="/races" class="btn-primary">View Races</a>
+            </div>
+        <% } else { %>
+            <% Object.keys(predictionsByYear).sort().reverse().forEach(year => { %>
+                <div class="season-card">
+                    <h3 class="season-title"><%= year %> Season</h3>
+                    
+                    <% const yearPredictions = predictionsByYear[year]; %>
+                    <% const completedYear = yearPredictions.filter(p => p.raceId && p.raceId.status === 'completed'); %>
+                    <% const totalPointsYear = completedYear.reduce((sum, p) => sum + (p.points || 0), 0); %>
+                    <% const avgYear = completedYear.length > 0 ? Math.round((totalPointsYear / completedYear.length) * 100) / 100 : 0; %>
+                    
+                    <div class="season-stats">
+                        <div class="season-stat-item">
+                            <span class="season-stat-number"><%= yearPredictions.length %></span>
+                            <span class="season-stat-label">Total Predictions</span>
+                        </div>
+                        <div class="season-stat-item">
+                            <span class="season-stat-number"><%= completedYear.length %></span>
+                            <span class="season-stat-label">Completed</span>
+                        </div>
+                        <div class="season-stat-item">
+                            <span class="season-stat-number"><%= totalPointsYear %></span>
+                            <span class="season-stat-label">Total Points</span>
+                        </div>
+                        <div class="season-stat-item">
+                            <span class="season-stat-number"><%= avgYear %></span>
+                            <span class="season-stat-label">Avg Points</span>
+                        </div>
+                    </div>
+
+                    <h4 class="races-subtitle">All Races</h4>
+                    <div class="breakdown-predictions-list">
+                        <% yearPredictions.forEach(prediction => { %>
+                            <div class="breakdown-prediction-item">
+                                <div class="breakdown-prediction-info">
+                                    <h4><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h4>
+                                    <p class="race-detail">📅 <%= prediction.raceId ? prediction.raceId.date.toDateString() : 'Unknown' %></p>
+                                    <% if (prediction.raceId) { %>
+                                        <% if (prediction.raceId.status === 'upcoming') { %>
+                                            <span class="badge-upcoming">UPCOMING</span>
+                                        <% } else if (prediction.raceId.status === 'completed') { %>
+                                            <span class="badge-completed">COMPLETED</span>
+                                        <% } else { %>
+                                            <span class="badge-live">LIVE</span>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                                <div class="breakdown-prediction-score">
+                                    <% if (prediction.raceId && prediction.raceId.status === 'completed') { %>
+                                        <span class="score-value"><%= prediction.points || 0 %>/50</span>
+                                    <% } else { %>
+                                        <span class="prediction-status">Awaiting result</span>
+                                    <% } %>
+                                    <a href="/predictions/<%= prediction._id %>" class="btn-secondary btn-small">View</a>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <div class="form-actions" >
+                     <a href="/stats" class="btn-secondary">Back to Stats</a>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+
+</body>
+</html>

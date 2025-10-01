@@ -2,31 +2,49 @@
 <html>
 <head>
     <title>Admin - Manage Races</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Manage F1 Races</h1>
-    
-    <a href="/admin/races/new">Add New Race</a>
-    <a href="/auth/sign-out">Sign Out</a>
+    <%- include('../../partials/navbar') %>
 
-    <h2>All Races</h2>
-    
-    <% races.forEach(race => { %>
-        <div>
-            <h3><%= race.name %></h3>
-            <p>Date: <%= race.date.toDateString() %></p>
-            <p>Circuit: <%= race.circuit %></p>
-            <p>Country: <%= race.country %></p>
-            <p>Status: <%= race.status %></p>
-            
-            <a href="/admin/races/<%= race._id %>">View</a>
-            <a href="/admin/races/<%= race._id %>/edit">Edit</a>
-            <form method="POST" action="/admin/races/<%= race._id %>?_method=DELETE" style="display: inline;">
-                <button type="submit">Delete</button>
-            </form>
+    <div class="container">
+        <h1 class="page-title">Manage F1 Races</h1>
+
+        <div class="form-actions" >
+            <a href="/admin/races/new" class="btn-primary">Add New Race</a>
         </div>
-        <hr>
-    <% }); %>
+
+        <div class="races-grid">
+            <% races.forEach(race => { %>
+                <div class="race-card">
+                    <div class="race-card-header">
+                        <h3 class="race-card-title"><%= race.name %></h3>
+                        <% if (race.status === 'upcoming') { %>
+                            <span class="badge-upcoming">UPCOMING</span>
+                        <% } else if (race.status === 'completed') { %>
+                            <span class="badge-completed">COMPLETED</span>
+                        <% } else { %>
+                            <span class="badge-live">LIVE</span>
+                        <% } %>
+                    </div>
+                    
+                    <div class="race-card-body">
+                        <p class="race-detail">📅 <%= race.date.toDateString() %></p>
+                        <p class="race-detail">🏎️ <%= race.circuit %></p>
+                        <p class="race-detail">📍 <%= race.country %></p>
+                    </div>
+                    
+                    <div class="race-card-actions">
+                        <a href="/admin/races/<%= race._id %>" class="btn-secondary">View</a>
+                        <a href="/admin/races/<%= race._id %>/edit" class="btn-primary">Edit</a>
+                        <form method="POST" action="/admin/races/<%= race._id %>?_method=DELETE">
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 
 </body>
 </html>

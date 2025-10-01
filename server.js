@@ -37,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
+app.use(express.static('public'));
 
 // Session Storage with MongoStore
 app.use(

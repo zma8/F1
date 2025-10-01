@@ -1,1 +1,67 @@
-//edit prediciton
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Prediction - <%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="container">
+        <h1 class="page-title">✏️ Edit Prediction</h1>
+        
+        <div class="form-card">
+            <div class="race-info-header">
+                <h2 class="race-name"><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h2>
+                <% if (prediction.raceId) { %>
+                    <div class="race-info-details">
+                        <p class="race-detail">📅 <%= prediction.raceId.date.toDateString() %></p>
+                        <p class="race-detail">🏎️ <%= prediction.raceId.circuit %></p>
+                        <p class="race-detail">📍 <%= prediction.raceId.country %></p>
+                    </div>
+                <% } %>
+            </div>
+
+            <form method="POST" action="/predictions/<%= prediction._id %>?_method=PUT" class="prediction-form">
+                <div class="form-group">
+                    <label for="pole">Pole Position:</label>
+                    <input type="text" id="pole" name="pole" value="<%= prediction.pole %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="winner">Race Winner:</label>
+                    <input type="text" id="winner" name="winner" value="<%= prediction.winner %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="podium">Podium (comma separated):</label>
+                    <input type="text" id="podium" name="podium" value="<%= prediction.podium.join(', ') %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fastestLap">Fastest Lap:</label>
+                    <input type="text" id="fastestLap" name="fastestLap" value="<%= prediction.fastestLap %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstDNF">First DNF:</label>
+                    <input type="text" id="firstDNF" name="firstDNF" value="<%= prediction.firstDNF %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confidence">Confidence Level (1-10):</label>
+                    <input type="number" id="confidence" name="confidence" min="1" max="10" value="<%= prediction.confidence %>" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Update Prediction</button>
+                    <a href="/predictions/<%= prediction._id %>" class="btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+            <p class="form-note">Note: You can only edit predictions before the race starts.</p>
+        </div>
+    </div>
+
+</body>
+</html>

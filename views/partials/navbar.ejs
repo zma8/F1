@@ -1,25 +1,29 @@
-<nav>
+<header>
   <% if (user) { %>
-    <div>
-      <h1>🏎️ Race Weekend Planner</h1>
-      <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/races">Races</a>
-        <a href="/predictions">My Predictions</a>
-        <a href="/stats">Stats</a>
-        <% if (user.role === 'admin') { %>
-          <a href="/admin/races">Manage Races</a>
-        <% } %>
-        <a href="/auth/sign-out">Sign Out</a>
+    <div class="header-content">
+      <div class="logo">
+        🏎️ RACE WEEKEND <span>PLANNER</span>
       </div>
+      <nav class="nav-menu">
+        <a href="/dashboard" class="nav-btn <%= typeof active !== 'undefined' && active === 'dashboard' ? 'active' : '' %>">🏠 Dashboard</a>
+        <a href="/races" class="nav-btn <%= typeof active !== 'undefined' && active === 'races' ? 'active' : '' %>">🏁 Races</a>
+        <a href="/predictions" class="nav-btn <%= typeof active !== 'undefined' && active === 'predictions' ? 'active' : '' %>">🎯 Predictions</a>
+        <a href="/stats" class="nav-btn <%= typeof active !== 'undefined' && active === 'stats' ? 'active' : '' %>">📊 Stats</a>
+        <% if (user.role === 'admin') { %>
+          <a href="/admin/races" class="nav-btn">⚙️ Admin</a>
+        <% } %>
+        <a href="/auth/sign-out" class="nav-btn">👤 Sign Out</a>
+      </nav>
     </div>
   <% } else { %>
-    <div>
-      <h1>🏎️ Race Weekend Planner</h1>
-      <div>
-        <a href="/auth/sign-up">Sign Up</a>
-        <a href="/auth/sign-in">Sign In</a>
+    <div class="header-content">
+      <div class="logo">
+        🏎️ RACE WEEKEND <span>PLANNER</span>
       </div>
+      <nav class="nav-menu">
+        <a href="/auth/sign-up" class="nav-btn">Sign Up</a>
+        <a href="/auth/sign-in" class="nav-btn active">Sign In</a>
+      </nav>
     </div>
   <% } %>
-</nav>
+</header>

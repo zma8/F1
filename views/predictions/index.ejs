@@ -2,40 +2,65 @@
 <html>
 <head>
     <title>My Predictions</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>My Predictions</h1>
+    <div class="container">
+        <h1 class="page-title">🎯 My Predictions</h1>
 
-    <% if (predictions.length === 0) { %>
-        <p>You haven't made any predictions yet.</p>
-        <a href="/races">View races to make your first prediction!</a>
-    <% } else { %>
-        <% predictions.forEach(prediction => { %>
-            <div>
-                <% if (prediction.raceId) { %>
-                    <p>Date: <%= prediction.raceId.date.toDateString() %></p>
-                    <p>Status: <%= prediction.raceId.status %></p>
-                <% } %>
-                <p>Confidence: <%= prediction.confidence %>%</p>
-                
-                <% if (prediction.raceId && prediction.raceId.status === 'completed') { %>
-                    <p><strong>Points Earned: <%= prediction.points || 0 %></strong></p>
-                <% } %>
-                
-                <a href="/predictions/<%= prediction._id %>">View Details</a>
-                
-                <% if (prediction.raceId && prediction.raceId.status === 'upcoming') { %>
-                    <a href="/predictions/<%= prediction._id %>/edit">Edit</a>
-                    <form method="POST" action="/predictions/<%= prediction._id %>?_method=DELETE">
-                        <button type="submit" >Delete</button>
-                    </form>
-                <% } %>
+        <% if (predictions.length === 0) { %>
+            <div class="empty-state">
+                <p>You haven't made any predictions yet.</p>
+                <a href="/races" class="btn-primary">View Races</a>
             </div>
-            <hr>
-        <% }); %>
-    <% } %>
+        <% } else { %>
+            <div class="predictions-grid">
+                <% predictions.forEach(prediction => { %>
+                    <div class="prediction-card">
+                        <div class="prediction-card-header">
+                            <h3 class="prediction-card-title"><%= prediction.raceId ? prediction.raceId.name : 'Unknown Race' %></h3>
+                            <% if (prediction.raceId) { %>
+                                <% if (prediction.raceId.status === 'upcoming') { %>
+                                    <span class="badge-upcoming">UPCOMING</span>
+                                <% } else if (prediction.raceId.status === 'completed') { %>
+                                    <span class="badge-completed">COMPLETED</span>
+                                <% } else { %>
+                                    <span class="badge-live">LIVE</span>
+                                <% } %>
+                            <% } %>
+                        </div>
+                        
+                        <div class="prediction-card-body">
+                            <% if (prediction.raceId) { %>
+                                <p class="prediction-detail">📅 <%= prediction.raceId.date.toDateString() %></p>
+                            <% } %>
+                            <p class="prediction-detail">🎯 Predicted Winner: <strong><%= prediction.predictedWinner %></strong></p>
+                            <p class="prediction-detail">💪 Confidence: <%= prediction.confidence %>/10</p>
+                            
+                            <% if (prediction.raceId && prediction.raceId.status === 'completed') { %>
+                                <div class="points-badge">
+                                    <span>Points Earned: <%= prediction.points || 0 %></span>
+                                </div>
+                            <% } %>
+                        </div>
+                        
+                        <div class="prediction-card-actions">
+                            <a href="/predictions/<%= prediction._id %>" class="btn-secondary">View Details</a>
+                            
+                            <% if (prediction.raceId && prediction.raceId.status === 'upcoming') { %>
+                                <a href="/predictions/<%= prediction._id %>/edit" class="btn-primary">Edit</a>
+                                <form method="POST" action="/predictions/<%= prediction._id %>?_method=DELETE" ">
+                                    <button type="submit" class="btn-delete">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
 
 </body>
 </html>
