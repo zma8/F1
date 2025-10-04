@@ -1,96 +1,106 @@
-# MEN Stack Starter Template with Session Authentication
+# 🏎️ F1 Race Weekend Planner
 
-Welcome to the MEN Stack Starter Template! This template provides a foundational setup for building web applications using MongoDB, Express.js, and Node.js, complete with session authentication. This is ideal for students looking to kickstart their development projects.
 
-## Table of Contents
-- [Prerequisites](#prerequisites)
-- [Clone the Repository](#clone-the-repository)
-- [Installation](#installation)
-- [Environment Setup](#environment-setup)
-- [Running the Application](#running-the-application)
-- [Removing Git and Creating Your Own Repo](#removing-git-and-creating-your-own-repo)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
+<img width="1512" height="792" alt="Screenshot 2025-10-04 at 9 04 23 AM" src="https://github.com/user-attachments/assets/e731296a-34cc-41a4-b6d3-1ea894498e23" />
 
-## Prerequisites
+<img width="1512" height="819" alt="Screenshot 2025-10-04 at 9 04 18 AM" src="https://github.com/user-attachments/assets/a13b462c-7794-4caa-87c6-901b47f56b7d" />
 
-Before you begin, ensure you have the following installed on your machine:
-- [Node.js](https://nodejs.org/) (LTS or later)
-- [MongoDB](https://www.mongodb.com/) (make sure it's running)
-- [Git](https://git-scm.com/) (for cloning the repository)
 
-## Clone the Repository
+## Description
 
-To clone this repository, open your terminal and run:
+F1 Race Weekend Planner is a full-stack web application that allows Formula 1 fans to predict race outcomes and compete with other users. Users can make predictions for upcoming F1 races, including pole position, race winner, podium finishers, fastest lap, and first DNF (Did Not Finish). Once races are completed and results are entered by administrators, the system automatically calculates points based on prediction accuracy.
 
-```bash
-git clone https://github.com/SEB-PT-6-Solutions/men-stack-session-auth-template.git YOUR_APP_NAME_HERE
-```
+This application was built to create an engaging platform for F1 enthusiasts to test their knowledge and compete with friends throughout the racing season.
 
-## Installation
-Navigate into the cloned directory:
-```bash
-cd YOUR_APP_NAME
-```
+### Key Features:
+- **User Authentication**: Secure sign-up and sign-in with role-based access (users and admins)
+- **Race Calendar**: View all upcoming and completed F1 races for the season
+- **Prediction System**: Make detailed predictions for each race before it begins
+- **Automatic Point Calculation**: Points are automatically awarded based on prediction accuracy when races are completed
+- **Statistics Dashboard**: Track your prediction accuracy, total points, and performance over time
+- **Admin Panel**: Administrators can create, edit, and manage races and results
+- **Responsive Design**: Clean, modern interface optimized for desktop and mobile devices
 
-Then, install the necessary dependencies:
+## Getting Started
 
-```bash
-npm i
-```
+### Deployed Application
+🔗 [Launch F1 Race Weekend Planner](#) 
 
-## Environment Setup
-```plaintext
-MONGODB_URI=atlas_db_uri
-SESSION_SECRET=your_secret_key
-```
-Replace `atlas_db_uri` with your desired database name and `your_secret_key` with a secure key.
+### Planning Materials
+📋 [View Project Planning & Wireframes](#) https://trello.com/invite/b/68d169d046204bad78276ecc/ATTI42345c07a17fbc6b09e3800b6594e1c40755859E/men-stack-crud-app-project
 
-## Removing Git and Creating Your Own Repo
-To remove the existing Git history and create your own repository:
 
-1. Remove the existing .git folder:
-  ```bash
-  rm -rf .git
-  ```
-2. Initialize a new Git repository:
-  ```bash
-  git init
-  ```
-3. Add all files to the new repository:
-  ```bash
-  git add .
-  ```
-4. Commit the changes
-   ```bash
-   git commit -m "Initial commit"
-   ``` 
-5. Create a new repository on GitHub (or any other platform) and follow the instructions to push your local repository.
-  Make a new repository on [GitHub](https://github.com/) named `<your-project-name>`
-  Now link your local project to your remote GitHub repo:
-  ```bash
-  git remote add origin https://github.com/<github-username>/YOUR_APP_NAME.git
-  git push origin main
-  ```
+## User Stories
 
-> 🚨 Do not copy the above command. It will not work. Your GitHub username will replace `<github-username>` (including the `<` and `>`) in the URL above.
+### Authentication & Security
+- **As a user**, I want to **create an account**, so that **I can track my personal predictions.**
+- **As a user**, I want to **securely log in and out**, so that **my data remains private and secure**.
 
-## Running the application
-```bash
-npm run dev
-```
+### Race Information
+- **As a user**, I want to **view upcoming race schedules**, so that **I can plan my weekends around race times**.
+- **As a user**, I want to **see race details like date, time, and circuit**, so that **I can make informed predictions**.
 
-## Features
-- User registration and login with session management
-- Basic CRUD operations
-- Modular file structure
-- Example routes and controllers
-- Basic user model setup
-- Middleware for templates and authorization
-- Basic authentication flow
+### Predictions
+- **As a user**, I want to **make predictions for each race** (pole position, winner, podium finishers), so that **I can test my F1 knowledge**.
+- **As a user**, I want to **edit my predictions before the race starts**, so that **I can update them based on practice sessions**.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+### Dashboard & Tracking
+- **As a user**, I want to **see a dashboard with my next race and current predictions**, so that **I can quickly access what's coming up**.
+- **As a user**, I want to **view my prediction history and accuracy**, so that **I can track my improvement over time**.
 
-Happy Coding!
+### Statistics & Gamification
+- **As a user**, I want to **see my points scored for correct predictions**, so that **I can gamify my F1 experience**.
+- **As a user**, I want to **view my statistics** (prediction accuracy, total points earned), so that **I can track my F1 knowledge improvement**.
+
+
+## Technologies Used
+
+### Backend
+- **Node.js** - 
+- **Express.js** - 
+- **MongoDB** - 
+- **Mongoose** -
+- **Express Session** -
+- **bcrypt** - 
+- **method-override** - 
+
+### Frontend
+- **EJS** -
+- **CSS** -
+- **HTML** - 
+
+### Development Tools
+- **dotenv** - 
+- **morgan** - 
+
+## How to Use
+
+### For Users:
+1. **Sign Up/Sign In**: Create an account or log in to access the platform
+2. **View Races**: Browse the F1 race calendar to see upcoming events
+3. **Make Predictions**: Click on a race to make your predictions before race day
+4. **Track Performance**: View your statistics and see how your predictions performed
+5. **Edit Predictions**: Update your predictions anytime before the race starts
+
+### For Administrators:
+1. **Manage Races**: Create new races or edit existing ones
+2. **Enter Results**: After a race concludes, enter the actual results
+3. **Status Updates**: Change race status from "upcoming" to "completed"
+4. **Automatic Scoring**: Points are automatically calculated when results are saved
+
+## Point System
+
+- **Pole Position**: 10 points
+- **Race Winner**: 15 points
+- **Podium Position** (each): 5 points (maximum 15 points)
+- **Fastest Lap**: 5 points
+- **First DNF**: 5 points
+- **Maximum Total**: 50 points per race
+
+## Next Steps (Planned Enhancements)
+
+- [ ] Add user profile customization (favorite drivers, teams)
+- [ ] Add race notifications/reminders before prediction deadlines
+- [ ] Create mobile app versions (iOS/Android)
+- [ ] Add social features (comments, race discussions)
+
